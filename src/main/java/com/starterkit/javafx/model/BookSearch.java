@@ -16,7 +16,7 @@ import javafx.collections.FXCollections;
  *
  * @author Leszek
  */
-public class PersonSearch {
+public class BookSearch {
 
 	private final StringProperty title = new SimpleStringProperty();
 	private final StringProperty authors = new SimpleStringProperty();
