@@ -1,20 +1,19 @@
 package com.starterkit.javafx.dataprovider;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import com.starterkit.javafx.dataprovider.data.BookVO;
 
 public class BooksRepository {
 
-	private static Collection<BookVO> persons = new ArrayList<>();
+	private static List<BookVO> books = new ArrayList<>();
 	
-	public static Collection<BookVO> getPersons() {
-		return persons;
+	public static List<BookVO> getBooks() {
+		return books;
 	}
 
-	public static void setPersons(Collection<BookVO> newPersons) {
-		persons = newPersons;
-	}
-		
+	public static void setBooks(List<BookVO> newBooks) {
+		books = newBooks;
+	}	
 }

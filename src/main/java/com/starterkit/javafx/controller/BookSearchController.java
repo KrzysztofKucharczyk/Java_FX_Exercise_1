@@ -2,14 +2,12 @@ package com.starterkit.javafx.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
 import com.starterkit.javafx.dataprovider.BooksRepository;
-import com.starterkit.javafx.dataprovider.DataProvider;
 import com.starterkit.javafx.dataprovider.Services;
 import com.starterkit.javafx.dataprovider.data.BookVO;
 import com.starterkit.javafx.model.BookSearch;
@@ -44,35 +42,26 @@ public class BookSearchController {
 
 	@FXML
 	private TextField titleField;
-
 	@FXML
 	private TextField authorsField;
 
 	@FXML
 	private Button searchButton;
-
 	@FXML
-	private Button showBooksButton;
-
+	private Button editBooksButton;
 	@FXML
 	private Button addBooksButton;
 
 	@FXML
 	private TableView<BookVO> resultTable;
-
 	@FXML
 	private TableColumn<BookVO, String> titleColumn;
-
 	@FXML
 	private TableColumn<BookVO, String> authorsColumn;
-
 	@FXML
 	private TableColumn<BookVO, String> yearColumn;
-
 	@FXML
 	private TableColumn<BookVO, String> genreColumn;
-
-	private final DataProvider dataProvider = DataProvider.INSTANCE;
 
 	private final Speaker speaker = Speaker.INSTANCE;
 
@@ -91,9 +80,6 @@ public class BookSearchController {
 		titleField.textProperty().bindBidirectional(model.titleProperty());
 		authorsField.textProperty().bindBidirectional(model.authorsProperty());
 		resultTable.itemsProperty().bind(model.resultProperty());
-
-		titleField.setText("");
-		authorsField.setText("");
 
 		searchButton.disableProperty()
 				.bind(titleField.textProperty().isEmpty().and(authorsField.textProperty().isEmpty()));
@@ -144,42 +130,37 @@ public class BookSearchController {
 	@FXML
 	private void searchButtonAction(ActionEvent event) {
 		LOG.debug("'Search' button clicked");
-		searchButtonActionVersion();
-	}
-
-	@FXML
-	private void showButtonAction(ActionEvent event) {
-		LOG.debug("'Show' button clicked");
-		showButtonActionVersion();
+		searchButtonAction();
 	}
 
 	@FXML
 	private void addButtonAction(ActionEvent event) {
 		LOG.debug("'Show' button clicked");
 
-		addButtonActionVersion();
+		addButtonAction();
 	}
 
-	private void searchButtonActionVersion() {
+	@FXML
+	private void editButtonAction(ActionEvent event) {
+		LOG.debug("'Search' button clicked");
+		editButtonAction();
+	}
+	
+	private void searchButtonAction() {
 
 		Task<Collection<BookVO>> backgroundTask = new Task<Collection<BookVO>>() {
 
 			@Override
 			protected Collection<BookVO> call() throws Exception {
 				LOG.debug("call() called");
-
-				if (model.getAuthors().isEmpty())
-					model.setAuthors(" ");
-				Collection<BookVO> result = dataProvider.findBooks(model.getTitle(), model.getAuthors());
-
-				return result;
+				Services.searchBooks(titleField.getText(), authorsField.getText());
+				return BooksRepository.getBooks();
 			}
 
 			@Override
 			protected void succeeded() {
 				LOG.debug("succeeded() called");
-				Collection<BookVO> result = getValue();
-				model.setResult(new ArrayList<BookVO>(result));
+				model.setResult(BooksRepository.getBooks());
 				resultTable.getSortOrder().clear();
 			}
 		};
@@ -187,44 +168,31 @@ public class BookSearchController {
 		new Thread(backgroundTask).start();
 	}
 
-	private void showButtonActionVersion() {
-
-		Task<Collection<BookVO>> backgroundTask = new Task<Collection<BookVO>>() {
-
-			@Override
-			protected Collection<BookVO> call() throws Exception {
-				LOG.debug("call() called");
-
-				Collection<BookVO> result = dataProvider.getBooks();
-				return result;
-			}
-
-			@Override
-			protected void succeeded() {
-				LOG.debug("succeeded() called");
-				Collection<BookVO> result = getValue();
-				model.setResult(new ArrayList<BookVO>(result));
-				resultTable.getSortOrder().clear();
-			}
-		};
-
-		new Thread(backgroundTask).start();
-	}
-
-	private void addButtonActionVersion() {
+	private void addButtonAction() {
 		Parent root;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/com/starterkit/javafx/view/person-add.fxml"), resources);
+			root = FXMLLoader.load(getClass().getResource("/com/starterkit/javafx/view/book-add.fxml"), resources);
 			Stage stage = new Stage();
-			stage.setTitle("My New Stage Title");
-			stage.setScene(new Scene(root, 450, 450));
+			stage.setTitle("Add new book form");
+			stage.setScene(new Scene(root, 450, 300));
 			stage.show();
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			BooksRepository.setPersons(Services.getBooks());
 		}
+	}
+	
+	private void editButtonAction() {
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("/com/starterkit/javafx/view/book-edit.fxml"), resources);
+			Stage stage = new Stage();
+			stage.setTitle("Edit book");
+			stage.setScene(new Scene(root, 450, 300));
+			stage.show();
 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

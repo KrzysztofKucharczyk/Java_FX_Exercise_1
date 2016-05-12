@@ -19,9 +19,6 @@ public class Startup extends Application {
 		Application.launch(args);
 	}
 
-	/**
-	 * @see {@link javafx.application.Application#start(Stage)}
-	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		/*
@@ -38,7 +35,7 @@ public class Startup extends Application {
 		 * Load screen from FXML file with specific language bundle (derived
 		 * from default locale).
 		 */
-		Parent root = FXMLLoader.load(getClass().getResource("/com/starterkit/javafx/view/person-search.fxml"), //
+		Parent root = FXMLLoader.load(getClass().getResource("/com/starterkit/javafx/view/book-search.fxml"), //
 				ResourceBundle.getBundle("com/starterkit/javafx/bundle/base"));
 
 		Scene scene = new Scene(root);

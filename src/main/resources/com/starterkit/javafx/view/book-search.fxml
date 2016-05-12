@@ -25,8 +25,8 @@
     </children>
   </GridPane>
   <Button fx:id="searchButton" defaultButton="true" layoutX="14.0" layoutY="141.0" mnemonicParsing="false" onAction="#searchButtonAction" text="%button.search" />
-  <Button fx:id="showBooksButton" defaultButton="false" layoutX="114.0" layoutY="141.0" mnemonicParsing="false" onAction="#showButtonAction" text="%button.show" />
-   <Button fx:id="addBooksButton" defaultButton="false" layoutX="214.0" layoutY="141.0" mnemonicParsing="false" onAction="#addButtonAction" text="%button.add" />
+  <Button fx:id="addBooksButton" defaultButton="false" layoutX="74.0" layoutY="141.0" mnemonicParsing="false" onAction="#addButtonAction" text="%button.add" />
+<!--   <Button fx:id="editBooksButton" defaultButton="false" layoutX="119.0" layoutY="141.0" mnemonicParsing="false" onAction="#editButtonAction" text="%button.edit" /> -->
   <TableView fx:id="resultTable" layoutX="14.0" layoutY="186.0" prefHeight="200.0" prefWidth="474.0">
     <placeholder>
       <Label text="%table.emptyText" />

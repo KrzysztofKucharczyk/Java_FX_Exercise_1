@@ -14,9 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class AddBookController {
+public class EditBookController {
 
-	private static final Logger LOG = Logger.getLogger(AddBookController.class);
+	private static final Logger LOG = Logger.getLogger(EditBookController.class);
 
 	@FXML
 	private ResourceBundle resources;
@@ -25,27 +25,27 @@ public class AddBookController {
 	private URL location;
 
 	@FXML
-	private TextField newTitleField;
+	private TextField editTitleField;
 
 	@FXML
-	private TextField newAuthorsField;
+	private TextField editAuthorsField;
 
 	@FXML
-	private TextField newStatusField;
+	private TextField editStatusField;
 
 	@FXML
-	private TextField newGenreField;
+	private TextField editGenreField;
 
 	@FXML
-	private TextField newYearField;
+	private TextField editYearField;
 
 	@FXML
 	private Button closeWindowButton;
 
 	@FXML
-	private Button saveBookButton;
+	private Button editBookButton;
 
-	public AddBookController() {
+	public EditBookController() {
 
 	}
 
@@ -57,34 +57,33 @@ public class AddBookController {
 	@FXML
 	private void closeWindowButtonAction(ActionEvent event) {
 		LOG.debug("'Close' button clicked");
-		closeAddBookWindow();
+		closeEditBookWindow();
 	}
 
 	@FXML
-	private void saveButtonAction(ActionEvent event) {
+	private void editButtonAction(ActionEvent event) {
 		LOG.debug("'Save' button clicked");
 		saveBookToDatabase();
 	}
 
-	private void closeAddBookWindow() {
-		Stage stage = (Stage) newTitleField.getScene().getWindow();
+	private void closeEditBookWindow() {
+		Stage stage = (Stage) editTitleField.getScene().getWindow();
 		stage.close();
 	}
 
 	private void saveBookToDatabase() {
 		Services service = new Services(generateJSONFromTextFields());
-		service.doPost();
-		closeAddBookWindow();
+		service.doPut();
 	}
 
 	@SuppressWarnings("unchecked")
 	private JSONObject generateJSONFromTextFields() {
 		JSONObject json = new JSONObject();
-		json.put("title", newTitleField.getText());
-		json.put("authors", newAuthorsField.getText());
-		json.put("status", newStatusField.getText());
-		json.put("genre", newGenreField.getText());
-		json.put("year", newYearField.getText());
+		json.put("title", editTitleField.getText());
+		json.put("authors", editAuthorsField.getText());
+		json.put("status", editStatusField.getText());
+		json.put("genre", editGenreField.getText());
+		json.put("year", editYearField.getText());
 
 		return json;
 	}
