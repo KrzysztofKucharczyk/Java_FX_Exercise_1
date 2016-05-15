@@ -8,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
+// REV: ta klasa nie jest wykorzystywana
 /**
  * Table cell, which displays {@link LocalDate} in specified format.
  *

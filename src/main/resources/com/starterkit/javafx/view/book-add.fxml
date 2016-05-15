@@ -22,6 +22,7 @@
       <TextField fx:id="newTitleField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
       <Label text="%label.authors" GridPane.rowIndex="1" />
       <TextField fx:id="newAuthorsField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+      <!-- REV: GridPane ma tylko 2 wiersze -->
       <Label text="%label.status" GridPane.rowIndex="2"/>
       <TextField fx:id="newStatusField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
       <Label text="%label.genre" GridPane.rowIndex="3"/>

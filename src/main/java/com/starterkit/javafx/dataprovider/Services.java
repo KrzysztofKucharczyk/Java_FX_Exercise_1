@@ -22,6 +22,7 @@ import org.json.simple.parser.ParseException;
 import com.starterkit.javafx.dataprovider.data.BookVO;
 import com.starterkit.javafx.dataprovider.impl.DataProviderImpl;
 
+// REV: nazwa klasy nic nie mowi
 public class Services {
 
 	private static final Logger LOG = Logger.getLogger(DataProviderImpl.class);
@@ -33,25 +34,31 @@ public class Services {
 	}
 
 	public void doPost() {
+		// REV: to nie jest dobre miejsce na startowanie watku, to wywolujacy ta operacje powinien moc zdecydowac czy operacja wykona sie w osobnym watku
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				// REV: ten obiekt powinien byc utworzony tylko raz jako zmienna klasy
 				HttpClient httpClient = HttpClientBuilder.create().build();
 				try {
+					// REV: adres powinien byc pobrany z konfiguracji
 					HttpPost request = new HttpPost("http://localhost:8080/webstore/rbooks/");
 
 					StringEntity params = new StringEntity(json.toString());
 					request.addHeader("content-type", "application/json");
 					request.setEntity(params);
 					httpClient.execute(request);
+					// REV: powinienes sprawdzic co zwrocil serwer
 
 				} catch (Exception ex) {
+					// REV: obsluga wyjatkow
 					ex.printStackTrace();
 				}
 			}
 		}).start();
 	}
 
+	// REV: nieuzywany kod poiwnien byc usuniety
 	public void doPut() {
 		// new Thread(new Runnable() {
 		// @Override
@@ -86,6 +93,7 @@ public class Services {
 		final String searchAuthors = authors;
 
 		StringBuffer response = new StringBuffer();
+		// REV: j.w.
 		String url = "http://localhost:8080/webstore/rbooks/search?title=" + searchTitle + "&authors=" + searchAuthors;
 
 		URL obj;
@@ -102,6 +110,7 @@ public class Services {
 			in.close();
 
 		} catch (MalformedURLException e) {
+			// REV: obsluga wyjatkow
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -111,11 +120,13 @@ public class Services {
 		try {
 			json = (JSONArray) new JSONParser().parse(response.toString());
 		} catch (ParseException e) {
+			// REV: j.w.
 			e.printStackTrace();
 		}
 
 		for (int i = 0; i < json.size(); i++) {
 			JSONObject j = (JSONObject) json.get(i);
+			// REV: ta konwersje powinna zalatwic biblioteka do obslugi JSONow
 			BookVO q = new BookVO(j.get("title").toString(), j.get("authors").toString(), j.get("status").toString(),
 					j.get("genre").toString(), j.get("year").toString());
 
@@ -123,6 +134,7 @@ public class Services {
 
 		}
 
+		// REV: nie ma potrzeby przechowywania wynikow, wystarczy je zwrocic
 		BooksRepository.setBooks(books);
 		return books;
 	}

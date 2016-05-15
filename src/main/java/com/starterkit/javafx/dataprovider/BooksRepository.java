@@ -6,6 +6,8 @@ import java.util.List;
 import com.starterkit.javafx.dataprovider.data.BookVO;
 
 public class BooksRepository {
+	
+	// REV: nie uzywaj staticow, sa problematyczne przy testowaniu
 
 	private static List<BookVO> books = new ArrayList<>();
 	

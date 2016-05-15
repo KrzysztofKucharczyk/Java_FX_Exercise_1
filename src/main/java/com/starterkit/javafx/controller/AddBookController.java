@@ -80,6 +80,7 @@ public class AddBookController {
 	@SuppressWarnings("unchecked")
 	private JSONObject generateJSONFromTextFields() {
 		JSONObject json = new JSONObject();
+		// REV: lepiej uzyc BookVO do przekazania danych do DataProvidera
 		json.put("title", newTitleField.getText());
 		json.put("authors", newAuthorsField.getText());
 		json.put("status", newStatusField.getText());

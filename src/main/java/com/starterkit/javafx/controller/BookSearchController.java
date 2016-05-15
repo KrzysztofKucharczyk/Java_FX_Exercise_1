@@ -88,6 +88,7 @@ public class BookSearchController {
 	private void initializeResultTable() {
 
 		titleColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getTitle()));
+		// REV: wystraczy ustawic CellValueFactory tylko raz
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
 		authorsColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAuthors()));
@@ -153,6 +154,7 @@ public class BookSearchController {
 			@Override
 			protected Collection<BookVO> call() throws Exception {
 				LOG.debug("call() called");
+				// REV: ten kod jest bardzo mylacy, metoda searchBooks powinna zwrocic wynik
 				Services.searchBooks(titleField.getText(), authorsField.getText());
 				return BooksRepository.getBooks();
 			}
@@ -172,12 +174,14 @@ public class BookSearchController {
 		Parent root;
 		try {
 			root = FXMLLoader.load(getClass().getResource("/com/starterkit/javafx/view/book-add.fxml"), resources);
+			// REV: okno powinno byc modalne
 			Stage stage = new Stage();
 			stage.setTitle("Add new book form");
 			stage.setScene(new Scene(root, 450, 300));
 			stage.show();
 
 		} catch (IOException e) {
+			// REV: obsluga wyjatkow
 			e.printStackTrace();
 		}
 	}
@@ -186,12 +190,14 @@ public class BookSearchController {
 		Parent root;
 		try {
 			root = FXMLLoader.load(getClass().getResource("/com/starterkit/javafx/view/book-edit.fxml"), resources);
+			// REV: j.w.
 			Stage stage = new Stage();
 			stage.setTitle("Edit book");
 			stage.setScene(new Scene(root, 450, 300));
 			stage.show();
 
 		} catch (IOException e) {
+			// REV: j.w.
 			e.printStackTrace();
 		}
 	}
